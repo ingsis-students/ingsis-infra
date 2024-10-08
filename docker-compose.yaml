@@ -1,0 +1,71 @@
+version: '3'
+
+services:
+  # Spring app service for Snippet API
+  snippet_api:
+    container_name: "snippet-api"
+    image: ce9215677644 # TODO CONSEGUÍ EL ID NO EL NOMBRE, no se si funca con esto
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://ingsis-snippet-db:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+    expose:
+      - 8080
+    depends_on:
+      - ingsis-snippet-db
+
+  # Postgres Database for Snippet API
+  ingsis-snippet-db:
+    image: postgres:12
+    ports:
+      - '5002:5432'
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - db-data-ingsis-snippet:/var/lib/postgresql/data
+
+
+  # Spring app service for User API
+  spring_api:
+    container_name: "user-api"
+    image: ghcr.io/NAMESPACE/IMAGE_NAME
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://ingsis-user-db:5432/postgres
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+    expose:
+      - 8080
+    depends_on:
+      - ingsis-user-db
+
+  # Postgres Database for User Service
+  ingsis-user-db:
+    image: postgres:alpine
+    container_name: ingsis-user-db
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - '5003:5432'
+    volumes:
+      - db-data-ingsis-user:/var/lib/postgresql/data
+
+  # PrintScript API
+  api:
+    container_name: "printscript-api"
+    build:
+      context: .
+      dockerfile: Dockerfile.multi
+    ports:
+      - '8081:8080'
+
+# Volúmenes persistentes para las bases de datos
+volumes:
+  db-data-ingsis-snippet:
+    external: false
+  db-data-ingsis-user:
+    external: false
