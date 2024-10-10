@@ -5,6 +5,10 @@ services:
   snippet_api:
     container_name: "snippet-api"
     image: ghcr.io/ignaciochevallier/ingsis-snippet:latest
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://ingsis-snippet-db:5002/postgres
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - '8082:8080'
     depends_on:
@@ -24,10 +28,15 @@ services:
 
 
 
+
   # Spring app service for User API
   spring_api:
     container_name: "user-api"
     image: ghcr.io/matichialvaa/ingsis-permission:latest
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://ingsis-permission-db:5003/postgres
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - '8083:8080'
     depends_on:
