@@ -20,4 +20,4 @@ jobs:
 
       - name: Pull latest code from GitHub
         run: |
-          ssh -o StrictHostKeyChecking=no students@20.70.208.179 'cd /ingsis-infra && git pull origin main'
+          ssh -o StrictHostKeyChecking=no students@20.70.208.179 'cd / && git pull origin main'
