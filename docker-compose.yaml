@@ -55,11 +55,9 @@ services:
       - db-data-ingsis-user:/var/lib/postgresql/data
 
   # PrintScript API
-  api:
+  printscript_api:
     container_name: "printscript-api"
-    build:
-      context: .
-      dockerfile: Dockerfile.multi
+    image: ghcr.io/tomasvalleduran/ingsis-parse:latest
     ports:
       - '8081:8080'
 
