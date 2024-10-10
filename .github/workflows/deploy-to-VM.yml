@@ -16,8 +16,12 @@ jobs:
       - name: Add SSH key
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }} # Usa la clave privada desde los secretos
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Load environment variables from .env
+        run: |
+          export $(cat /.env | xargs)
 
       - name: Pull latest code from GitHub
         run: |
-          ssh -o StrictHostKeyChecking=no students@20.70.208.179 'cd / && git pull origin main'
+          ssh -o StrictHostKeyChecking=no students@20.70.208.179 'cd ~/ingsis-infra && git pull origin main'
