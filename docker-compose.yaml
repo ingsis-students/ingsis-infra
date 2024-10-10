@@ -4,7 +4,7 @@ services:
   # Spring app service for Snippet API
   snippet_api:
     container_name: "snippet-api"
-    image: ce9215677644 # TODO CONSEGUÍ EL ID NO EL NOMBRE, no se si funca con esto
+    image: ghcr.io/ignaciochevallier/ingsis-snippet:latest
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://ingsis-snippet-db:5432/${POSTGRES_DB}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
@@ -30,13 +30,13 @@ services:
   # Spring app service for User API
   spring_api:
     container_name: "user-api"
-    image: ghcr.io/matichialvaa/
+    image: ghcr.io/matichialvaa/ingsis-permission:latest
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://ingsis-user-db:5432/postgres
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
-    expose:
-      - 8080
+    ports:
+      - '8083:8080'
     depends_on:
       - ingsis-user-db
 
