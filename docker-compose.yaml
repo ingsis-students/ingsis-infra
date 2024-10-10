@@ -42,9 +42,9 @@ services:
     depends_on:
       - ingsis-permission-db
 
-  #Postgres Database
+  # Postgres Database
   ingsis-permission-db:
-    image: postgres:12 #si le ponemos alpine, hay q cambiar de permission tamb.
+    image: postgres:12 # Si le ponemos alpine, hay que cambiar de permission también.
     ports:
       - '5003:5432'
     environment:
