@@ -5,12 +5,8 @@ services:
   snippet_api:
     container_name: "snippet-api"
     image: ghcr.io/ignaciochevallier/ingsis-snippet:latest
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://ingsis-snippet-db:5432/${POSTGRES_DB}
-      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
-    expose:
-      - 8080
+    ports:
+      - '8082:8080'
     depends_on:
       - ingsis-snippet-db
 
@@ -27,14 +23,11 @@ services:
       - db-data-ingsis-snippet:/var/lib/postgresql/data
 
 
+
   # Spring app service for User API
   spring_api:
     container_name: "user-api"
     image: ghcr.io/matichialvaa/ingsis-permission:latest
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://ingsis-user-db:5432/postgres
-      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - '8083:8080'
     depends_on:
@@ -52,12 +45,16 @@ services:
     volumes:
       - db-data-ingsis-user:/var/lib/postgresql/data
 
+
+
   # PrintScript API
   printscript_api:
     container_name: "printscript-api"
     image: ghcr.io/tomasvalleduran/ingsis-parse:latest
     ports:
       - '8081:8080'
+
+
 
 # Volúmenes persistentes para las bases de datos
 volumes:
