@@ -24,4 +24,4 @@ jobs:
 
       - name: Pull latest code from GitHub
         run: |
-          ssh -o StrictHostKeyChecking=no students@20.70.208.179 'cd ~/ingsis-infra && git pull origin main'
+          ssh -o StrictHostKeyChecking=no students@20.70.208.179 'cd ~/ingsis-infra && GITHUB_USER=your_username GITHUB_TOKEN=your_token git pull https://$GITHUB_USER:$GITHUB_TOKEN@github.com/your_username/your_repo.git'
