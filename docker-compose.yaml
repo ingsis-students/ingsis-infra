@@ -1,67 +1,83 @@
 version: '3'
 
 services:
-  # Spring app service for Snippet API
+# --- Snippet API ---
+  # Spring app
   snippet_api:
     container_name: "snippet-api"
-    image: ghcr.io/ignaciochevallier/ingsis-snippet:latest
-    environment: # db connection data. depends on db, and uses to connect.
-      SPRING_DATASOURCE_URL: jdbc:postgresql://ingsis-snippet-db:5432/postgres
-      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+    image: ghcr.io/ingsis-students/ingsis-snippet:latest
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${SNIPPET_DB_HOST}:${SNIPPET_DB_PORT}/${SNIPPET_DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${SNIPPET_POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${SNIPPET_POSTGRES_PASSWORD}
+
+      AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
+      AUTH_SERVER_URI: ${AUTH_SERVER_URI}
+      AUTH_CLIENT_ID: ${AUTH_CLIENT_ID}
+      AUTH_CLIENT_SECRET: ${AUTH_CLIENT_SECRET}
+      spring.security.oauth2.resourceserver.jwt.issuer-uri: ${AUTH_SERVER_URI}
     ports:
       - '8082:8080'
     depends_on:
-      - ingsis-snippet-db
+      - snippet-db
 
-  # Postgres Database for Snippet API
-  ingsis-snippet-db:
+  # Postgres Database
+  snippet-db:
     image: postgres:12
     ports:
       - '5002:5432'
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${SNIPPET_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${SNIPPET_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${SNIPPET_POSTGRES_DB}
     volumes:
       - db-data-ingsis-snippet:/var/lib/postgresql/data
 
-
-
-
-  # Spring app service for User API
-  spring_api:
-    container_name: "user-api"
-    image: ghcr.io/matichialvaa/ingsis-permission:latest
+# --- Permissions API ---
+  # Spring app
+  permissions_api:
+    container_name: "permissions-api"
+    image: ghcr.io/ingsis-students/ingsis-permission:latest
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://ingsis-permission-db:5432/postgres
-      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${PERMISSIONS_DB_HOST}:${PERMISSIONS_DB_PORT}/${PERMISSIONS_DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${PERMISSIONS_POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${PERMISSIONS_POSTGRES_PASSWORD}
+
+      AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
+      AUTH_SERVER_URI: ${AUTH_SERVER_URI}
+      AUTH_CLIENT_ID: ${AUTH_CLIENT_ID}
+      AUTH_CLIENT_SECRET: ${AUTH_CLIENT_SECRET}
+      spring.security.oauth2.resourceserver.jwt.issuer-uri: ${AUTH_SERVER_URI}
     ports:
       - '8083:8080'
     depends_on:
-      - ingsis-permission-db
+      - permission-db
 
   # Postgres Database
-  ingsis-permission-db:
-    image: postgres:12 # Si le ponemos alpine, hay que cambiar de permission también.
+  permission-db:
+    image: postgres:12
     ports:
       - '5003:5432'
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${PERMISSIONS_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${PERMISSIONS_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${PERMISSIONS_POSTGRES_DB}
     volumes:
       - db-data-ingsis-user:/var/lib/postgresql/data
 
 
-
-  # PrintScript API
+# --- Parse API ---
+  # Spring app
   printscript_api:
     container_name: "printscript-api"
-    image: ghcr.io/tomasvalleduran/ingsis-parse:latest
+    image: ghcr.io/ingsis-students/ingsis-parse:latest
     ports:
       - '8081:8080'
+    environment:
+      AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
+      AUTH_SERVER_URI: ${AUTH_SERVER_URI}
+      AUTH_CLIENT_ID: ${AUTH_CLIENT_ID}
+      AUTH_CLIENT_SECRET: ${AUTH_CLIENT_SECRET}
 
 
 
