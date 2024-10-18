@@ -1,16 +1,14 @@
 version: '3'
 
 services:
-# --- Snippet API ---
-  # Spring app
+  # --- Snippet API ---
   snippet_api:
     container_name: "snippet-api"
-    image: ghcr.io/ingsis-students/ingsis-snippet:latest
+    image: ghcr.io/ingsis-students/ingsis-snippet${ENVIRONMENT}:latest
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://${SNIPPET_DB_HOST}:${SNIPPET_DB_PORT}/${SNIPPET_DB_NAME}
-      SPRING_DATASOURCE_USERNAME: ${SNIPPET_POSTGRES_USER}
-      SPRING_DATASOURCE_PASSWORD: ${SNIPPET_POSTGRES_PASSWORD}
-
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${SNIPPET_DB_HOST}:${DB_PORT}/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
       AUTH_SERVER_URI: ${AUTH_SERVER_URI}
       AUTH_CLIENT_ID: ${AUTH_CLIENT_ID}
@@ -21,28 +19,26 @@ services:
     depends_on:
       - snippet-db
 
-  # Postgres Database
   snippet-db:
+    container_name: "snippet-db"
     image: postgres:12
     ports:
       - '5002:5432'
     environment:
-      POSTGRES_USER: ${SNIPPET_POSTGRES_USER}
+      POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${SNIPPET_POSTGRES_PASSWORD}
       POSTGRES_DB: ${SNIPPET_POSTGRES_DB}
     volumes:
       - db-data-ingsis-snippet:/var/lib/postgresql/data
 
-# --- Permissions API ---
-  # Spring app
+  # --- Permissions API ---
   permissions_api:
     container_name: "permissions-api"
     image: ghcr.io/ingsis-students/ingsis-permission:latest
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://${PERMISSIONS_DB_HOST}:${PERMISSIONS_DB_PORT}/${PERMISSIONS_DB_NAME}
-      SPRING_DATASOURCE_USERNAME: ${PERMISSIONS_POSTGRES_USER}
-      SPRING_DATASOURCE_PASSWORD: ${PERMISSIONS_POSTGRES_PASSWORD}
-
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${PERMISSIONS_DB_HOST}:${DB_PORT}/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
       AUTH_SERVER_URI: ${AUTH_SERVER_URI}
       AUTH_CLIENT_ID: ${AUTH_CLIENT_ID}
@@ -53,21 +49,19 @@ services:
     depends_on:
       - permission-db
 
-  # Postgres Database
   permission-db:
+    container_name: "permission-db"
     image: postgres:12
     ports:
       - '5003:5432'
     environment:
-      POSTGRES_USER: ${PERMISSIONS_POSTGRES_USER}
-      POSTGRES_PASSWORD: ${PERMISSIONS_POSTGRES_PASSWORD}
-      POSTGRES_DB: ${PERMISSIONS_POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - db-data-ingsis-user:/var/lib/postgresql/data
 
-
-# --- Parse API ---
-  # Spring app
+  # --- Parse API ---
   printscript_api:
     container_name: "printscript-api"
     image: ghcr.io/ingsis-students/ingsis-parse:latest
@@ -79,9 +73,6 @@ services:
       AUTH_CLIENT_ID: ${AUTH_CLIENT_ID}
       AUTH_CLIENT_SECRET: ${AUTH_CLIENT_SECRET}
 
-
-
-# Volúmenes persistentes para las bases de datos
 volumes:
   db-data-ingsis-snippet:
     external: false
