@@ -20,7 +20,6 @@ jobs:
 
   pull-prod-virtual-machines:
     name: pull changes to prod virtual machine
-    needs: pull-dev-virtual-machines
     uses: ./.github/workflows/pull-to-vm.yml
     with:
       host: '20.213.8.120'
