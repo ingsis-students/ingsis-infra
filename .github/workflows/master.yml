@@ -1,0 +1,30 @@
+name: Master Workflow
+run-name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  pull-dev-virtual-machines:
+    name: pull changes to dev virtual machine
+    uses: ./.github/workflows/pull-to-vm.yml
+    with:
+      host: '20.70.208.179'
+      user: 'students'
+      gh_user: ${{ secrets.GH_USERNAME }}
+    secrets:
+      key: ${{ secrets.SSH_PRIVATE_KEY }}
+      pat: ${{ secrets.PAT }}
+
+  pull-prod-virtual-machines:
+    name: pull changes to prod virtual machine
+    uses: ./.github/workflows/pull-to-vm.yml
+    with:
+      host: '20.213.8.120'
+      user: 'matichialva'
+      gh_user: ${{ secrets.GH_USERNAME }}
+    secrets:
+      key: ${{ secrets.SSH_PRIVATE_KEY }}
+      pat: ${{ secrets.PAT }}
