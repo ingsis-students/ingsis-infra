@@ -5,25 +5,15 @@ on:
   push:
     branches:
       - main
+      - prod
 
 jobs:
-  pull-dev-virtual-machines:
-    name: pull changes to dev virtual machine
+  pull-to-virtual-machine:
+    name: pull changes to vm
     uses: ./.github/workflows/pull-to-vm.yml
     with:
-      host: '20.70.208.179'
-      user: 'students'
-      gh_user: 'TomasValleDuran'
-    secrets:
-      key: ${{ secrets.SSH_PRIVATE_KEY }}
-      pat: ${{ secrets.PAT }}
-
-  pull-prod-virtual-machines:
-    name: pull changes to prod virtual machine
-    uses: ./.github/workflows/pull-to-vm.yml
-    with:
-      host: '20.213.8.120'
-      user: 'matichialva'
+      host: ${{ github.ref_name == 'main' && '20.70.208.179' || '20.213.8.120' }}
+      user: ${{ github.ref_name == 'main' && 'students' || 'matichialva' }}
       gh_user: 'TomasValleDuran'
     secrets:
       key: ${{ secrets.SSH_PRIVATE_KEY }}
