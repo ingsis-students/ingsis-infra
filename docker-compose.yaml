@@ -20,6 +20,7 @@ services:
       - '8082:8080'
     depends_on:
       - snippet-db
+      - redis
 
   snippet-db:
     container_name: "snippet-db"
@@ -76,6 +77,8 @@ services:
       AUTH_CLIENT_SECRET: ${AUTH_CLIENT_SECRET}
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
+    depends_on:
+        - redis
 
 
   # --- Asset Service ---
