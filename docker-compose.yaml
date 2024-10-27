@@ -14,6 +14,8 @@ services:
       AUTH_CLIENT_ID: ${AUTH_CLIENT_ID}
       AUTH_CLIENT_SECRET: ${AUTH_CLIENT_SECRET}
       spring.security.oauth2.resourceserver.jwt.issuer-uri: ${AUTH_SERVER_URI}
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
     ports:
       - '8082:8080'
     depends_on:
@@ -72,6 +74,8 @@ services:
       AUTH_SERVER_URI: ${AUTH_SERVER_URI}
       AUTH_CLIENT_ID: ${AUTH_CLIENT_ID}
       AUTH_CLIENT_SECRET: ${AUTH_CLIENT_SECRET}
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
 
 
   # --- Asset Service ---
@@ -97,6 +101,13 @@ services:
       - "10002:10002"
     volumes:
       - blob:/workspace
+
+  # --- Redis ---
+  redis:
+    image: redis:latest
+    container_name: "redis"
+    ports:
+      - '6379:6379'
 
 volumes:
   db-data-ingsis-snippet:
