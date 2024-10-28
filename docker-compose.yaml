@@ -5,6 +5,7 @@ services:
   snippet_api:
     container_name: "snippet-api"
     image: ghcr.io/ingsis-students/ingsis-snippet${ENVIRONMENT_FLAG}:latest
+    platform: linux/amd64
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://${SNIPPET_DB_HOST}:${DB_PORT}/${DB_NAME}
       SPRING_DATASOURCE_USERNAME: ${DB_USER}
@@ -25,6 +26,7 @@ services:
   snippet-db:
     container_name: "snippet-db"
     image: postgres:12
+    platform: linux/amd64
     ports:
       - '5002:5432'
     environment:
@@ -38,6 +40,7 @@ services:
   permissions_api:
     container_name: "permissions-api"
     image: ghcr.io/ingsis-students/ingsis-permission${ENVIRONMENT_FLAG}:latest
+    platform: linux/amd64
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://${PERMISSIONS_DB_HOST}:${DB_PORT}/${DB_NAME}
       SPRING_DATASOURCE_USERNAME: ${DB_USER}
@@ -55,6 +58,7 @@ services:
   permission-db:
     container_name: "permission-db"
     image: postgres:12
+    platform: linux/amd64
     ports:
       - '5003:5432'
     environment:
@@ -68,6 +72,7 @@ services:
   printscript_api:
     container_name: "printscript-api"
     image: ghcr.io/ingsis-students/ingsis-parse${ENVIRONMENT_FLAG}:latest
+    platform: linux/amd64
     ports:
       - '8081:8080'
     environment:
@@ -85,6 +90,7 @@ services:
   api:
     container_name: "asset_service"
     image: ghcr.io/austral-ingsis/snippet-asset-service:latest
+    platform: linux/amd64
     ports:
       - "8084:8080"
     environment:
@@ -95,6 +101,7 @@ services:
 
   azurite:
     image: mcr.microsoft.com/azure-storage/azurite
+    platform: linux/amd64
     container_name: "azurite"
     hostname: azurite
     restart: always
