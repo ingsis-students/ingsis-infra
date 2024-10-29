@@ -37,7 +37,7 @@ services:
       - db-data-ingsis-snippet:/var/lib/postgresql/data
 
   # --- Permissions API ---
-  permissions_api:
+  permissions-api:
     container_name: "permissions-api"
     image: ghcr.io/ingsis-students/ingsis-permission${ENVIRONMENT_FLAG}:latest
     platform: linux/amd64
