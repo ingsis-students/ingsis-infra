@@ -36,9 +36,9 @@ services:
     volumes:
       - db-data-ingsis-snippet:/var/lib/postgresql/data
 
-  # --- Permissions API ---
-  permissions_api:
-    container_name: "permissions-api"
+  # --- Permission API ---
+  permission_api:
+    container_name: "permission-api"
     image: ghcr.io/ingsis-students/ingsis-permission${ENVIRONMENT_FLAG}:latest
     platform: linux/amd64
     environment:
@@ -69,7 +69,7 @@ services:
       - db-data-ingsis-user:/var/lib/postgresql/data
 
   # --- Parse API ---
-  printscript_api:
+  printscript-api:
     container_name: "printscript-api"
     image: ghcr.io/ingsis-students/ingsis-parse${ENVIRONMENT_FLAG}:latest
     platform: linux/amd64
@@ -87,8 +87,8 @@ services:
 
 
   # --- Asset Service ---
-  api:
-    container_name: "asset_service"
+  asset-api:
+    container_name: "asset-api"
     image: ghcr.io/austral-ingsis/snippet-asset-service:latest
     platform: linux/amd64
     ports:
