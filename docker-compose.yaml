@@ -99,6 +99,19 @@ services:
       NEW_RELIC_AGENT_ENABLED: false
 
 
+  # --- UI Service ---
+  printscript-ui:
+    container_name: "printscript-ui"
+    image: ghcr.io/ingsis-students/printscript-ui${ENVIRONMENT_FLAG}:latest
+    platform: linux/amd64
+    ports:
+      - "4173:4173"
+    depends_on:
+      - snippet-api
+      - printscript-api
+      - permission-api
+      - asset-api
+
   azurite:
     image: mcr.microsoft.com/azure-storage/azurite
     platform: linux/amd64
