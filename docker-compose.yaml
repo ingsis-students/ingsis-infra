@@ -140,7 +140,8 @@ services:
     volumes:
       - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
     #  - ./config/nginx-vm.conf:/etc/nginx/nginx.conf:ro
-    #  - ./nginx/certificates:/etc/letsencrypt:ro  # Mount the directory where certificates will be stored
+    #  - /etc/letsencrypt/live/ingsis-students.duckdns.org:/etc/letsencrypt/live/ingsis-students.duckdns.org:ro
+    #    - /etc/letsencrypt/archive/ingsis-students.duckdns.org:/etc/letsencrypt/archive/ingsis-students.duckdns.org:ro
     ports:
       - "80:80"
     #  - "443:443"  # Expose HTTPS
