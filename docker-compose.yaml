@@ -1,4 +1,4 @@
-version: '3'
+# Best app ever!! :(
 
 services:
   # --- Snippet API ---
@@ -83,7 +83,7 @@ services:
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
     depends_on:
-        - redis
+      - redis
 
 
   # --- Asset Service ---
@@ -131,7 +131,7 @@ services:
     container_name: "redis"
     ports:
       - '6379:6379'
-
+      -
 
   # --- Nginx with SSL ---
   nginx:
