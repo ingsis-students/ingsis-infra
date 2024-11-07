@@ -1,0 +1,4 @@
+license_key: ${NEW_RELIC_LICENSE_KEY}
+
+enable_process_metrics: true
+verbose: 1
