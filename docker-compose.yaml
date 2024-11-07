@@ -138,8 +138,7 @@ services:
     image: nginx:latest
     container_name: "nginx"
     volumes:
-    #  - ./config/nginx-local.conf:/etc/nginx/nginx.conf:ro
-      - ./config/nginx-vm.conf:/etc/nginx/nginx.conf:ro
+      - ./config/nginx-${CONFIG_FLAG}.conf:/etc/nginx/nginx.conf:ro
       - /etc/letsencrypt/live/ingsis-students.duckdns.org:/etc/letsencrypt/live/ingsis-students.duckdns.org:ro
       - /etc/letsencrypt/archive/ingsis-students.duckdns.org:/etc/letsencrypt/archive/ingsis-students.duckdns.org:ro
     ports:
