@@ -17,6 +17,9 @@ services:
       spring.security.oauth2.resourceserver.jwt.issuer-uri: ${AUTH_SERVER_URI}
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
+      NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
+      NEW_RELIC_APP_NAME: 'snippet-service'
+      NEW_RELIC_AGENT_ENABLED: true
     ports:
       - '8082:8080'
     depends_on:
@@ -50,6 +53,9 @@ services:
       AUTH_CLIENT_ID: ${AUTH_CLIENT_ID}
       AUTH_CLIENT_SECRET: ${AUTH_CLIENT_SECRET}
       spring.security.oauth2.resourceserver.jwt.issuer-uri: ${AUTH_SERVER_URI}
+      NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
+      NEW_RELIC_APP_NAME: 'permission-service'
+      NEW_RELIC_AGENT_ENABLED: true
     ports:
       - '8083:8080'
     depends_on:
