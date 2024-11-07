@@ -82,6 +82,7 @@ services:
       AUTH_CLIENT_SECRET: ${AUTH_CLIENT_SECRET}
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
+      NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
       NEW_RELIC_APP_NAME: 'printscript-service'
       NEW_RELIC_AGENT_ENABLED: true
     depends_on:
@@ -152,7 +153,7 @@ services:
       - asset-api
 
   newrelic-agent:
-    container_name: newrelic-infra
+    container_name: 'newrelic-infra'
     build:
       context: .
       dockerfile: newrelic-infra.dockerfile
