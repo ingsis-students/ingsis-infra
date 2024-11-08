@@ -17,7 +17,6 @@ services:
       spring.security.oauth2.resourceserver.jwt.issuer-uri: ${AUTH_SERVER_URI}
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
-      NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
       NEW_RELIC_APP_NAME: 'snippet-service'
       NEW_RELIC_AGENT_ENABLED: true
     ports:
@@ -53,7 +52,6 @@ services:
       AUTH_CLIENT_ID: ${AUTH_CLIENT_ID}
       AUTH_CLIENT_SECRET: ${AUTH_CLIENT_SECRET}
       spring.security.oauth2.resourceserver.jwt.issuer-uri: ${AUTH_SERVER_URI}
-      NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
       NEW_RELIC_APP_NAME: 'permission-service'
       NEW_RELIC_AGENT_ENABLED: true
     ports:
@@ -88,7 +86,6 @@ services:
       AUTH_CLIENT_SECRET: ${AUTH_CLIENT_SECRET}
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
-      NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
       NEW_RELIC_APP_NAME: 'printscript-service'
       NEW_RELIC_AGENT_ENABLED: true
     depends_on:
@@ -157,21 +154,6 @@ services:
       - printscript-api
       - permission-api
       - asset-api
-
-  newrelic-agent:
-    container_name: 'newrelic-infra'
-    build:
-      context: .
-      dockerfile: newrelic-infra.dockerfile
-    cap_add:
-      - SYS_PTRACE
-    network_mode: bridge
-    pid: host
-    privileged: true
-    volumes:
-      - "/:/host:ro"
-      - "/var/run/docker.sock:/var/run/docker.sock"
-    restart: unless-stopped
 
 volumes:
   db-data-ingsis-snippet:
