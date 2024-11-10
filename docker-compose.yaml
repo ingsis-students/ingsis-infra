@@ -145,13 +145,15 @@ services:
   nginx:
     image: nginx:latest
     container_name: "nginx"
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
     volumes:
-      - ./config/nginx-${CONFIG_FLAG}.conf:/etc/nginx/nginx.conf:ro
-      - /etc/letsencrypt/live/ingsis-students.duckdns.org:/etc/letsencrypt/live/ingsis-students.duckdns.org:ro
-      - /etc/letsencrypt/archive/ingsis-students.duckdns.org:/etc/letsencrypt/archive/ingsis-students.duckdns.org:ro
+      - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /etc/letsencrypt/live/${DOMAIN_NAME}:/etc/letsencrypt/live/${DOMAIN_NAME}:ro
+      - /etc/letsencrypt/archive/${DOMAIN_NAME}:/etc/letsencrypt/archive/${DOMAIN_NAME}:ro
     ports:
       - "80:80"
-      - "443:443"  # Expose HTTPS
+      - "443:443"
     depends_on:
       - snippet-api
       - printscript-api
